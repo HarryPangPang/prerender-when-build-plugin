@@ -1,3 +1,4 @@
+```
 new PrerenderSPAPlugin({
                 routes: ['/', '/result'],
                 outDir: 'dist',
@@ -18,3 +19,4 @@ new PrerenderSPAPlugin({
                     }
                 },
               })
+```
