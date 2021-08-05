@@ -1,0 +1,11 @@
+{
+  "name": "prerender-when-build-plugin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "portfinder": "^1.0.28",
+    "puppeteer": "^10.1.0"
+  }
+}
