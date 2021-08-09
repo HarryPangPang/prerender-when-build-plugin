@@ -1,8 +1,12 @@
 {
   "name": "prerender-when-build-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HarryPangPang/prerender-when-build-plugin/issues"
+  },
+  "homepage": "https://github.com/HarryPangPang/prerender-when-build-plugin#readme",
   "keywords": ["prender", "webpack", "react", "vue"],
   "dependencies": {
     "express": "^4.17.1",

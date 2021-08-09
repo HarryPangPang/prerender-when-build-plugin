@@ -1,5 +1,15 @@
+# prerender-when-build-plugin
+This Wepack plugin is designed to pre-render HTML at build time, support mock data for rendering, and support multi-route rendering.
+
+## use in webpack.config.js: 
+
 ```
-new PrerenderSPAPlugin({
+const PrerenderPlugin = require('prerender-when-build-plugin');
+
+...
+
+plugins:[
+            new PrerenderSPAPlugin({
                 routes: ['/', '/result'],
                 outDir: 'dist',
                 port: 11111,
@@ -19,4 +29,6 @@ new PrerenderSPAPlugin({
                     }
                 },
               })
+]
+
 ```
