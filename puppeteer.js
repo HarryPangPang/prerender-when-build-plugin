@@ -34,6 +34,13 @@ class PuppeteerRenderer {
 	async handleRequestInterception(page, baseURL) {
 		await page.setRequestInterception(true)
 		page.on('request', req => {
+			// 跳过请求
+			if (this._options.skipRequest) {
+				if (!req.url().startsWith(baseURL)) {
+					req.abort()
+					return
+				}
+			}
 			let apiPath = req._url.split('/')
 			apiPath = '/' + apiPath.splice(3).join('/')
 			if(this._options.mock&&Object.prototype.toString.call(this._options.mock)=== "[object Object]"&&this._options.mock[apiPath]){
@@ -43,13 +50,7 @@ class PuppeteerRenderer {
 				  })
 				  return
 			}
-			// 跳过请求
-			if (this._options.skipRequest) {
-				if (!req.url().startsWith(baseURL)) {
-					req.abort()
-					return
-				}
-			}
+			
 			req.continue()
 		})
 	}
