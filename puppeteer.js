@@ -35,11 +35,9 @@ class PuppeteerRenderer {
 		await page.setRequestInterception(true)
 		page.on('request', req => {
 			// 跳过请求
-			if (this._options.skipRequest) {
-				if (!req.url().startsWith(baseURL)) {
-					req.abort()
-					return
-				}
+			if (this._options.skipRequest&&['fetch', 'xhr', 'websocket'].indexOf(req.resourceType()) > -1) {
+				req.abort()
+				return
 			}
 			let apiPath = req._url.split('/')
 			apiPath = '/' + apiPath.splice(3).join('/')
