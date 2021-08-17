@@ -12,9 +12,9 @@ class PuppeteerRenderer {
 	async initialize() {
 		try {
 			// Workaround for Linux SUID Sandbox issues.
+			if (!this._options.args) this._options.args = []
+			this._options.args.push('--disable-web-security')
 			if (process.platform === 'linux') {
-				if (!this._options.args) this._options.args = []
-
 				if (this._options.args.indexOf('--no-sandbox') === -1) {
 					this._options.args.push('--no-sandbox')
 					this._options.args.push('--disable-setuid-sandbox')
