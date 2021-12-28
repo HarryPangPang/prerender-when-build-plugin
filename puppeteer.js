@@ -32,16 +32,17 @@ class PuppeteerRenderer {
 
 	// 处理请求拦截
 	async handleRequestInterception(page, baseURL) {
+		// 劫持所有请求
 		await page.setRequestInterception(true)
 		page.on('request', req => {
-			// 跳过api请求
+			// 匹配类型，只过滤'fetch', 'xhr', 'websocket'三种类型的请求，否则会导致图片等网络资源无法加载
 			const isLocalApi = ['fetch', 'xhr', 'websocket'].indexOf(req.resourceType()) > -1 && req.url().startsWith(baseURL)
-			// 跳过所有请求
+			// 跳过所有本地请求
 			if (this._options.skipRequest && isLocalApi) {
 				req.abort();
 				return;
 			}
-
+			// 强制匹配请求地址，并进行mock
 			if (this._options.forceMock && Object.prototype.toString.call(this._options.forceMock) === '[object Object]' && this._options.forceMock[req.url()]) {
 				req.respond({
 					contentType: 'application/json; charset=utf-8',
@@ -50,13 +51,14 @@ class PuppeteerRenderer {
 				return;
 			}
 			if (isLocalApi) {
-				// mock地址
 				let apiPath = req.url().split('/');
 				apiPath = '/' + apiPath.splice(3).join('/');
+				// 匹配本地请求路径，并进行数据mock
 				if (
 					this._options.mock &&
 					Object.prototype.toString.call(this._options.mock) === '[object Object]' && this._options.mock[apiPath]
 				) {
+					// 自定义返回请求数据
 					req.respond({
 						contentType: 'application/json; charset=utf-8',
 						body: JSON.stringify(this._options.mock[apiPath])

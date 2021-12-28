@@ -14,18 +14,6 @@ class PrerenderSPAPlugin {
 	apply(compiler) {
 		const compilerFS = compiler.outputFileSystem
 
-		// 递归创建文件夹
-		const mkdirp = function (dir) {
-			return new Promise((resolve, reject) => {
-				fs.mkdir(dir, { recursive: true }, err => {
-					if (err) {
-						return reject(err)
-					}
-					return resolve()
-				})
-			})
-		}
-
 		compiler.hooks.afterEmit.tapAsync('PrerenderSPAPlugin', (compilation, done) => {
 			const PrerendererInstance = new Prerenderer(this._options)
 			PrerendererInstance.initialize()
